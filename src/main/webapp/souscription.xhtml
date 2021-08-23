@@ -16,7 +16,7 @@
     </h:head>
 
     <h:body styleClass="login-body p-d-flex p-jc-center p-ai-center">
-        <h:form>
+        <h:form enctype="multipart/form-data">
             <p:card styleClass="card" style="width: 69em">
                 <f:facet name="title">
                     Demande de souscription
@@ -31,26 +31,26 @@
 
                 <p:scrollPanel mode="native" style="height:500px">
 
-                    <p:fieldset legend="État Civil">
+                    <p:fieldset legend="État Civil" toggleable="true">
                         <div class="card ui-fluid">
                             <div class="p-formgrid p-grid">
                                 <div class="p-field p-col-12 p-md-4">
                                     <p:outputLabel for="nom">Nom</p:outputLabel>
-                                    <p:inputText id="nom" type="text" />
+                                    <p:inputText id="nom" type="text" required="true" />
                                 </div>
                                 <div class="p-field p-col-12 p-md-4">
                                     <p:outputLabel for="prenoms">Prénom(s)</p:outputLabel>
-                                    <p:inputText id="prenoms" type="text" />
+                                    <p:inputText id="prenoms" type="text" required="true" />
                                 </div>
                                 <div class="p-field p-col-12 p-md-4">
                                     <p:outputLabel for="date_de_naissance" value="Date de naissance"/>
                                     <p:datePicker id="date_de_naissance" value="#{calendarView.date11}" mindate="#{calendarView.minDate}"
                                                   maxdate="#{calendarView.maxDate}" monthNavigator="true" yearNavigator="true"
-                                                  pattern="dd/MM/yyyy" readonlyInput="true"/>
+                                                  pattern="dd/MM/yyyy" readonlyInput="true" required="true"/>
                                 </div>
                                 <div class="p-field p-col-12 p-md-6">
                                     <p:outputLabel for="@next" value="Type de pièce"/>
-                                    <p:selectOneMenu id="type_de_piece" value="#{selectOneMenuView.hideNoSelectOption}"
+                                    <p:selectOneMenu id="type_de_piece" required="true" value="#{selectOneMenuView.hideNoSelectOption}"
                                                      hideNoSelectionOption="#{not empty selectOneMenuView.hideNoSelectOption}">
                                         <p:ajax update="@this" process="@this"/>
                                         <f:selectItem itemLabel="Veuillez choisir un type de pièce" itemValue="#{null}" noSelectionOption="true"/>
@@ -61,15 +61,15 @@
                                 </div>
                                 <div class="p-field p-col-12 p-md-6">
                                     <p:outputLabel for="numero_piece">N° pièce</p:outputLabel>
-                                    <p:inputText id="numero_piece" type="text" />
+                                    <p:inputText id="numero_piece" required="true" type="text" />
                                 </div>
                                 <div class="p-field p-col-12">
                                     <p:outputLabel for="adresse">Adresse</p:outputLabel>
-                                    <p:inputText id="adresse" type="text" />
+                                    <p:inputText id="adresse" required="true" type="text" />
                                 </div>
                                 <div class="p-field p-col-12 p-md-6">
                                     <p:outputLabel for="@next" value="Type de pièce"/>
-                                    <p:selectOneMenu id="situation_matrimoniale" value="#{selectOneMenuView.hideNoSelectOption}"
+                                    <p:selectOneMenu id="situation_matrimoniale" required="true" value="#{selectOneMenuView.hideNoSelectOption}"
                                                      hideNoSelectionOption="#{not empty selectOneMenuView.hideNoSelectOption}">
                                         <p:ajax update="@this" process="@this"/>
                                         <f:selectItem itemLabel="Veuillez indiquer votre situation matrimoniale" itemValue="#{null}" noSelectionOption="true"/>
@@ -81,7 +81,7 @@
                                 </div>
                                 <div class="p-field p-col-12 p-md-6">
                                     <p:outputLabel for="@next" value="Sexe"/>
-                                    <p:selectOneRadio id="sexe" value="">
+                                    <p:selectOneRadio id="sexe" required="true" value="">
                                         <f:selectItem itemLabel="Homme" itemValue="Option1"/>
                                         <f:selectItem itemLabel="Femme" itemValue="Option2"/>
                                         <f:selectItem itemLabel="Autre" itemValue="Option3"/>
@@ -89,26 +89,26 @@
                                 </div>
                                 <div class="p-field p-col-12 p-md-6">
                                     <p:outputLabel for="nombre_enfants" value="Nombre d'enfants"/>
-                                    <p:inputNumber id="nombre_enfants" decimalPlaces="0" value="" />
+                                    <p:inputNumber id="nombre_enfants" required="true" decimalPlaces="0" value="" />
                                 </div>
                                 <div class="p-field p-col-12 p-md-4">
                                     <p:outputLabel for="numero_de_telephone" value="Numero de téléphone"/>
-                                    <p:inputMask id="numero_de_telephone" value="" mask="99 99 999 999"/>
+                                    <p:inputMask id="numero_de_telephone" required="true" value="" mask="99 99 999 999"/>
                                 </div>
                             </div>
                         </div>
                     </p:fieldset>
 
-                    <p:fieldset class="p-mt-3" legend="Matériel">
+                    <p:fieldset class="p-mt-3" legend="Matériel" toggleable="true">
                         <div class="card ui-fluid">
                             <div class="p-formgrid p-grid">
                                 <div class="p-field p-col-12 p-md-4">
                                     <p:outputLabel for="designation">Désignation</p:outputLabel>
-                                    <p:inputText id="designation" type="text" />
+                                    <p:inputText id="designation" required="true" type="text" />
                                 </div>
                                 <div class="p-field p-col-12 p-md-4">
                                     <p:outputLabel for="@next" value="Type de matériel"/>
-                                    <p:selectOneMenu id="type_de_materiel" value="#{selectOneMenuView.hideNoSelectOption}"
+                                    <p:selectOneMenu id="type_de_materiel" required="true" value="#{selectOneMenuView.hideNoSelectOption}"
                                                      hideNoSelectionOption="#{not empty selectOneMenuView.hideNoSelectOption}">
                                         <p:ajax update="@this" process="@this"/>
                                         <f:selectItem itemLabel="Veuillez choisir un type de matériel" itemValue="#{null}" noSelectionOption="true"/>
@@ -124,23 +124,52 @@
                                 </div>
                                 <div class="p-field p-col-12 p-md-4">
                                     <p:outputLabel value="Marque" for="@next"/>
-                                    <p:autoComplete id="marque" dropdown="true" value="#{autoCompleteView.txt6}"
+                                    <p:autoComplete id="marque" required="true" dropdown="true" value="#{autoCompleteView.txt6}"
                                                     completeMethod="#{autoCompleteView.completeText}" scrollHeight="250"/>
                                 </div>
                                 <div class="p-field p-col-12 p-md-6">
                                     <p:outputLabel for="prix_achat" value="Prix d'achat"/>
-                                    <p:inputNumber id="prix_achat" value="" symbol=" FCFA"
+                                    <p:inputNumber id="prix_achat" required="true" value="" symbol=" FCFA"
                                                    symbolPosition="s" decimalSeparator=" " decimalPlaces="0"/>
                                 </div>
                                 <div class="p-field p-col-12 p-md-6">
                                     <p:outputLabel value="Fournisseur" for="@next"/>
-                                    <p:autoComplete id="fournisseur" value="#{autoCompleteView.txt1}"
+                                    <p:autoComplete id="fournisseur" required="true" value="#{autoCompleteView.txt1}"
                                                     completeMethod="#{autoCompleteView.completeText}" scrollHeight="250"/>
                                 </div>
                             </div>
                         </div>
                     </p:fieldset>
+
+                    <p:fieldset class="p-mt-3" legend="Pièces jointes" toggleable="true">
+                        <div class="card ui-fluid">
+                            <div class="p-formgrid p-grid">
+                                <div class="p-field p-col-12 p-md-3">
+                                    <p:outputLabel for="@next" value="Pièce d'identité"/>
+                                    <p:fileUpload value="" required="true" mode="simple" skinSimple="true"/>
+                                </div>
+                                <div class="p-field p-col-12 p-md-3">
+                                    <p:outputLabel value="Bulletin de salaire" for="@next"/>
+                                    <p:fileUpload value="" required="true" mode="simple" skinSimple="true"/>
+                                </div>
+                                <div class="p-field p-col-12 p-md-3">
+                                    <p:outputLabel value="Certificat de résidence" for="@next"/>
+                                    <p:fileUpload value="" required="true" mode="simple" skinSimple="true"/>
+                                </div>
+                                <div class="p-field p-col-12 p-md-3">
+                                    <p:outputLabel value="Certificat de mariage" for="@next"/>
+                                    <p:fileUpload value="" required="true" mode="simple" skinSimple="true"/>
+                                </div>
+                            </div>
+                        </div>
+                    </p:fieldset>
                 </p:scrollPanel>
+                <f:facet name="footer">
+                    <div class="p-d-flex">
+                        <p:button styleClass="ui-button-danger" outcome="index" value="Annuler" icon="pi pi-times"/>
+                        <p:commandButton styleClass="p-ml-auto" update="@form" value="Soumettre" iconPos="right" icon="pi pi-check"/>
+                    </div>
+                </f:facet>
             </p:card>
         </h:form>
 
