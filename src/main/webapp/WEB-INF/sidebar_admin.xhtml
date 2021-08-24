@@ -1,0 +1,60 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pm="http://primefaces.org/manhattan">
+
+    <div class="layout-sidebar">
+        <div class="layout-sidebar-logo">
+            <a href="dashboard.xhtml">
+                <p:graphicImage name="images/logo-manhattan.png" library="manhattan-layout" />
+            </a>
+            <a href="#" id="layout-sidebar-anchor" class="layout-sidebar-anchor" title="Verrouiller le menu">
+                <i class="pi"/>
+            </a>
+        </div>
+
+        <div class="layout-menu-container">
+            <h:form id="menuform">
+                <pm:menu widgetVar="ManhattanMenuWidget">
+                    <p:menuitem id="dashboard" value="Tableau de bord" outcome="dashboard" icon="pi pi-fw pi-home"/>
+                    <p:menuitem id="demandes_de_souscription" value="Demandes de souscription" outcome="demandes_souscription" icon="pi pi-fw"/>
+                    <p:menuitem id="commandes" value="Commandes" outcome="commandes" icon="pi pi-fw"/>
+                    <p:submenu id="clients_et_fornisseurs" label="Clients et Fournisseurs" icon="pi pi-fw">
+                        <p:menuitem id="clients" value="Clients" icon="pi pi-fw"/>
+                        <p:menuitem id="fournisseurs" value="Fournisseurs" icon="pi pi-fw"/>
+                    </p:submenu>
+                    <p:submenu id="materiels" label="Matériels" icon="pi pi-fw">
+                        <p:menuitem id="nouveau_materiel" value="Nouveau matériel" outcome="nouveau_materiel" icon="pi pi-fw"/>
+                        <p:menuitem id="liste_materiels" value="Liste des matériels" outcome="liste_materiels" icon="pi pi-fw"/>
+                    </p:submenu>
+                    <p:submenu id="contrats" label="Contrats" icon="pi pi-fw">
+                        <p:menuitem id="nouveau_contrat" value="Nouveau contrat" outcome="nouveau_contrat" icon="pi pi-fw"/>
+                        <p:menuitem id="attribution_contrat" value="Attribution de contrat" outcome="attribution_contrat" icon="pi pi-fw"/>
+                        <p:menuitem id="liste_contrats" value="Liste des contrats" outcome="liste_contrats" icon="pi pi-fw"/>
+                    </p:submenu>
+                    <p:submenu id="factures" label="Factures" icon="pi pi-fw">
+                        <p:menuitem id="factures_clients" value="Clients" icon="pi pi-fw"/>
+                        <p:menuitem id="factures_fournisseurs" value="Fournisseurs" icon="pi pi-fw"/>
+                    </p:submenu>
+                    <p:submenu id="agents" label="Agents" icon="pi pi-fw">
+                        <p:menuitem id="nouvel_agent" value="Nouvel agent" outcome="nouvel_agent" icon="pi pi-fw"/>
+                        <p:menuitem id="liste_agents" value="Liste des agents" outcome="liste_agents" icon="pi pi-fw"/>
+                    </p:submenu>
+                    <p:menuitem id="utilisateurs" value="Utilisateurs" outcome="utilisateurs" icon="pi pi-fw"/>
+                    <p:menuitem id="encaissements" value="Encaissements" outcome="encaissements" icon="pi pi-fw"/>
+                    <p:submenu id="litiges_contentieux" label="Litiges et Contentieux" icon="pi pi-fw">
+                        <p:menuitem id="litiges" value="Litiges" icon="pi pi-fw"/>
+                        <p:menuitem id="contentieux" value="Contentieux" icon="pi pi-fw"/>
+                    </p:submenu>
+                    <p:menuitem id="environnement" value="Module Environnement" outcome="environnement" icon="pi pi-fw pi-info-circle"/>
+                    <p:menuitem id="configuration" value="Configuration" outcome="configuration" icon="pi pi-fw pi-cog"/>
+                </pm:menu>
+            </h:form>
+        </div>
+
+    </div>
+
+</ui:composition>

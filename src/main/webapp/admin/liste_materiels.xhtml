@@ -1,0 +1,174 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template_admin.xhtml">
+
+    <ui:define name="title">Liste des matériels</ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+            <div class="card crud-demo">
+                <p:growl id="messages" showDetail="true"/>
+
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:commandButton id="delete-products-button" value="#{crudView.deleteButtonMessage}"
+                                         icon="pi pi-trash" actionListener="#{crudView.deleteSelectedProducts}"
+                                         styleClass="ui-button-danger" disabled="#{!crudView.hasSelectedProducts()}"
+                                         update="@this">
+                            <p:confirm header="Confirmation" message="Supprimer le(s) produit(s) sélectionné(s) ?"
+                                       icon="pi pi-exclamation-triangle"/>
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+                <p:dataTable id="dt-products" widgetVar="dtMateriels" var="materiel" value="#{crudView.products}"
+                             reflow="true" styleClass="products-table"
+                             selection="#{crudView.selectedMateriels}" rowKey="#{materiel.id}" paginator="true"
+                             rows="10" rowSelectMode="add" paginatorPosition="bottom">
+                    <f:facet name="header">
+                        <div class="products-table-header">
+                            <span style="font-weight: bold">MATÉRIELS</span>
+
+                            <span class="filter-container ui-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <p:inputText id="globalFilter" onkeyup="PF('dtMateriels').filter()" placeholder="Recherche"/>
+                            </span>
+                        </div>
+                    </f:facet>
+
+                    <p:ajax event="rowSelect" update=":form:delete-products-button"/>
+                    <p:ajax event="rowUnselect" update=":form:delete-products-button"/>
+                    <p:ajax event="rowSelectCheckbox" update=":form:delete-products-button"/>
+                    <p:ajax event="rowUnselectCheckbox" update=":form:delete-products-button"/>
+                    <p:ajax event="toggleSelect" update=":form:delete-products-button"/>
+
+                    <p:column selectionMode="multiple" exportable="false"></p:column>
+
+                    <p:column headerText="Code" sortBy="#{materiel.code}" filterBy="#{materiel.code}">
+                        <h:outputText value="#{materiel.code}"/>
+                    </p:column>
+                    <p:column headerText="Libellé" sortBy="#{materiel.libelle}" filterBy="#{materiel.libelle}">
+                        <h:outputText value="#{materiel.libelle}"/>
+                    </p:column>
+                    <p:column headerText="Marque" sortBy="#{materiel.fournisseur}" filterBy="#{materiel.fournisseur}">
+                        <h:outputText value="#{materiel.fournisseur}"/>
+                    </p:column>
+                    <p:column headerText="Fournisseur" sortBy="#{materiel.fournisseur}" filterBy="#{materiel.fournisseur}">
+                        <h:outputText value="#{materiel.fournisseur}"/>
+                    </p:column>
+                    <p:column headerText="Prix" sortBy="#{materiel.prix}">
+                        <h:outputText value="#{materiel.prix}" style="font-weight: 700">
+                            <f:convertNumber integerOnly="true" pattern="### ### FCFA" type="currency"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Type de matériel" sortBy="#{materiel.type_materiel}" filterBy="#{materiel.type_materiel}">
+                        <h:outputText value="#{materiel.type_materiel}"/>
+                    </p:column>
+                    <p:column headerText="État du matériel" sortBy="#{materiel.etat}">
+                        <p:rating value="#{materiel.etat}" readonly="true"/>
+                    </p:column>
+                    <p:column headerText="Statut" sortBy="#{materiel.statut}"
+                              filterBy="#{materiel.statut}">
+                        <h:outputText styleClass="product-badge status-#{materiel.statut.name().toLowerCase()}"
+                                      value="#{materiel.statut.text}"/>
+                    </p:column>
+                    <p:column exportable="false">
+                        <p:commandButton icon="pi pi-pencil" update=":form:manage-product-content"
+                                         oncomplete="PF('manageProductDialog').show()"
+                                         styleClass="edit-button rounded-button ui-button-success" process="@this">
+                            <f:setPropertyActionListener value="#{materiel}" target="#{crudView.selectedMateriel}"/>
+                            <p:resetInput target=":form:manage-materiel-content"/>
+                        </p:commandButton>
+                        <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+                                         oncomplete="PF('deleteProductDialog').show()">
+                            <f:setPropertyActionListener value="#{materiel}" target="#{crudView.selectedMateriel}"/>
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:dialog header="Informations sur le matériel" showEffect="fade" modal="true"
+                          widgetVar="manageProductDialog" responsive="true">
+                    <p:outputPanel id="manage-product-content" class="ui-fluid">
+                        <p:outputPanel rendered="#{not empty crudView.selectedMateriel}">
+
+                            <p:fieldset legend="Matériel">
+                                <div class="p-formgrid p-grid">
+                                    <div class="p-field p-col-12 p-md-6">
+                                        <p:outputLabel for="libelle">Libellé</p:outputLabel>
+                                        <p:inputText id="libelle" value="#{crudView.selectedMateriel.libelle}" type="text" required="true" />
+                                    </div>
+
+                                    <div class="p-field p-col-12 p-md-4">
+                                        <p:outputLabel value="Marque" for="@next"/>
+                                        <p:inputText id="marque" value="#{crudView.selectedMateriel.libelle}" type="text" required="true" />
+                                    </div>
+                                    <div class="p-field p-col-12 p-md-4">
+                                        <p:outputLabel for="@next" value="Type de matériel"/>
+                                        <p:inputText id="type_materiel" value="#{crudView.selectedMateriel.type_materiel}" type="text" required="true" />
+                                    </div>
+                                    <div class="p-field p-col-12 p-md-4">
+                                        <p:outputLabel for="@next">État du matériel</p:outputLabel>
+                                        <p:rating value="${crudView.selectedMateriel.etat}"/>
+                                    </div>
+
+                                    <div class="p-field p-col-12 p-md-6">
+                                        <p:outputLabel value="Fournisseur" for="@next"/>
+                                        <p:inputText id="fournisseur" value="#{crudView.selectedMateriel.fournisseur}" type="text" required="true" />
+                                    </div>
+
+                                    <div class="p-field p-col-12 p-md-6">
+                                        <p:outputLabel value="Statut" for="@next"/>
+                                        <p:selectOneMenu id="statut"  value="#{crudView.selectedMateriel.statut.text}">
+                                            <f:selectItem itemLabel="HORS CONTRAT" itemValue="HORS CONTRAT"/>
+                                            <f:selectItem itemLabel="SOUS CONTRAT" itemValue="SOUS CONTRAT"/>
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+                            </p:fieldset>
+
+                            <p:fieldset legend="Coût" class="p-mt-3">
+                                <div class="p-formgrid p-grid">
+                                    <div class="p-field p-col-12 p-md-6">
+                                        <p:outputLabel for="prix_achat" value="Prix d'achat"/>
+                                        <p:inputNumber id="prix_achat" required="true" value="" minValue="0" symbol=" FCFA"
+                                                       symbolPosition="s" decimalPlaces="0"/>
+                                    </div>
+                                    <div class="p-field p-col-12 p-md-6">
+                                        <p:outputLabel for="prix_vente" value="Prix de vente"/>
+                                        <p:inputNumber id="prix_vente" required="true" value="" minValue="0" symbol=" FCFA"
+                                                       symbolPosition="s" decimalPlaces="0"/>
+                                    </div>
+                                </div>
+                            </p:fieldset>
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Enregistrer" icon="pi pi-check" actionListener="#{crudView.saveProduct}"
+                                         update="manage-product-content" process="manage-product-content @this"/>
+                        <p:commandButton value="Annuler" icon="pi pi-times" onclick="PF('manageProductDialog').hide()"
+                                         class="ui-button-secondary"/>
+                    </f:facet>
+                </p:dialog>
+
+                <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
+                                 message="Supprimer le matériel ?" header="Confirmation" severity="warn">
+                    <p:commandButton value="Oui" icon="pi pi-check" actionListener="#{crudView.deleteProduct}"
+                                     process="@this" oncomplete="PF('deleteProductDialog').hide()"/>
+                    <p:commandButton value="Non" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                     onclick="PF('deleteProductDialog').hide()"/>
+                </p:confirmDialog>
+
+                <p:confirmDialog global="true" showEffect="fade" width="350">
+                    <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                    <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
+                                     icon="pi pi-times"/>
+                </p:confirmDialog>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

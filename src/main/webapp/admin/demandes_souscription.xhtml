@@ -1,0 +1,87 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template_admin.xhtml">
+
+    <ui:define name="title">Gestion des demandes de souscription</ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+
+            <div class="card">
+                <p:dataTable id="basicDT" var="demande" widgetVar="dtDemandes" value="#{selectionView.products1}">
+                    <f:facet name="header">
+                        <div class="products-table-header p-d-flex p-jc-between">
+                            <span style="font-weight: bold">DEMANDES DE SOUSCRIPTION</span>
+                        </div>
+                    </f:facet>
+                    
+                    <p:column headerText="Date" filterBy="#{demande.quantity}">
+                        <h:outputText value="#{demande.quantity}" />
+                    </p:column>
+                    
+                    <p:column headerText="Nom" filterBy="#{demande.name}">
+                        <h:outputText value="#{demande.name}" />
+                    </p:column>
+                    
+                    <p:column headerText="Prénom(s)" filterBy="#{demande.name}">
+                        <h:outputText value="#{demande.name}" />
+                    </p:column>
+
+                    <p:column headerText="Désignation" filterBy="#{demande.category}">
+                        <h:outputText value="#{demande.category}" />
+                    </p:column>
+                    
+                    <p:column headerText="Type de matériel" filterBy="#{demande.category}">
+                        <h:outputText value="#{demande.category}" />
+                    </p:column>
+
+                    <p:column headerText="Fournisseur" filterBy="#{demande.quantity}">
+                        <h:outputText value="#{demande.quantity}" />
+                    </p:column>
+                    
+                    <p:column headerText="Prix d'achat" filterBy="#{demande.price}" sortBy="#{demande.price}">
+                        <h:outputText value="#{demande.price}" class="p-text-bold">
+                            <f:convertNumber integerOnly="true" pattern="### ### FCFA" type="currency"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column style="width:3rem;text-align: center">
+                        <p:commandButton update=":form:productDetail" oncomplete="PF('productDialog').show()"
+                                         icon="pi pi-eye" title="View">
+                            <f:setPropertyActionListener value="#{product}"
+                                                         target="#{selectionView.selectedProduct}"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </div>
+
+            <p:dialog header="Visualisation de la demande" widgetVar="productDialog" modal="true" showEffect="fade"
+                      hideEffect="fade" resizable="false">
+                <p:outputPanel id="productDetail" style="text-align:center;">
+                    <p:column rendered="#{not empty selectionView.selectedProduct}">
+                        <div class="product">
+                            <div class="product-grid-item card" style="margin-bottom: 0">
+                                <div class="product-grid-item-top">
+                                    
+                                </div>
+                                <div class="product-grid-item-content">
+                                    
+                                </div>
+                                <div class="p-d-flex p-jc-between">
+                                    <p:commandButton value="Refuser" type="button" styleClass="ui-confirmdialog-no ui-button-danger"
+                                                     icon="pi pi-times"/>
+                                    <p:commandButton value="Accepter" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </p:column>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

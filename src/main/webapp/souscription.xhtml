@@ -19,10 +19,13 @@
         <h:form enctype="multipart/form-data">
             <p:card styleClass="card" style="width: 69em">
                 <f:facet name="title">
-                    Demande de souscription
+                    <div class="p-text-uppercase">
+                        Demande de souscription
+                    </div>
                 </f:facet>
                 <f:facet name="subtitle">
                     <div class="p-d-flex">
+                        <p>STANDARD</p>
                         <p class="p-ml-auto p-text-bold">
                             ${autoUpdateView.time}
                         </p>
@@ -68,7 +71,7 @@
                                     <p:inputText id="adresse" required="true" type="text" />
                                 </div>
                                 <div class="p-field p-col-12 p-md-6">
-                                    <p:outputLabel for="@next" value="Type de pièce"/>
+                                    <p:outputLabel for="@next" value="Situation matrimoniale"/>
                                     <p:selectOneMenu id="situation_matrimoniale" required="true" value="#{selectOneMenuView.hideNoSelectOption}"
                                                      hideNoSelectionOption="#{not empty selectOneMenuView.hideNoSelectOption}">
                                         <p:ajax update="@this" process="@this"/>
@@ -129,7 +132,7 @@
                                 </div>
                                 <div class="p-field p-col-12 p-md-6">
                                     <p:outputLabel for="prix_achat" value="Prix d'achat"/>
-                                    <p:inputNumber id="prix_achat" required="true" value="" symbol=" FCFA"
+                                    <p:inputNumber id="prix_achat" required="true" value="" minValue="0" symbol=" FCFA"
                                                    symbolPosition="s" decimalSeparator=" " decimalPlaces="0"/>
                                 </div>
                                 <div class="p-field p-col-12 p-md-6">
@@ -165,9 +168,9 @@
                     </p:fieldset>
                 </p:scrollPanel>
                 <f:facet name="footer">
-                    <div class="p-d-flex">
-                        <p:button styleClass="ui-button-danger" outcome="index" value="Annuler" icon="pi pi-times"/>
-                        <p:commandButton styleClass="p-ml-auto" update="@form" value="Soumettre" iconPos="right" icon="pi pi-check"/>
+                    <div class="p-d-flex p-jc-between">
+                        <p:button styleClass="ui-button-secondary" outcome="index" value="Annuler" icon="pi pi-times"/>
+                        <p:commandButton update="@form" value="Soumettre" iconPos="right" icon="pi pi-check"/>
                     </div>
                 </f:facet>
             </p:card>
