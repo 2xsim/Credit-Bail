@@ -1,7 +1,7 @@
 package com.mmp.creditbail.view;
 
-import com.mmp.creditbail.beans.Country;
-import com.mmp.creditbail.service.CountryService;
+import com.mmp.creditbail.beans.Marque;
+import com.mmp.creditbail.service.MarqueService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,44 +15,39 @@ import org.primefaces.event.SelectEvent;
 
 @Named
 @RequestScoped
-public class AutoCompleteView {
+public class AutoCompleteMarqueView {
 
-    private String txt1;
-    private String txt2;
-    private String txt3;
-    private String txt4;
-    private String txt5;
     private String txt6;
     private String txt7;
     private String txt8;
     private String txt9;
-    private Country country1;
-    private Country country2;
-    private Country country3;
-    private Country country4;
-    private Country country5;
-    private List<Country> selectedCountries;
+    private Marque country1;
+    private Marque country2;
+    private Marque country3;
+    private Marque country4;
+    private Marque country5;
+    private List<Marque> selectedCountries;
 
     @Inject
-    private CountryService countryService;
+    private MarqueService marqueService;
 
     public List<String> completeText(String query) {
         String queryLowerCase = query.toLowerCase();
-        List<String> countryList = new ArrayList<>();
-        List<Country> countries = countryService.getCountries();
+        List<String> marqueList = new ArrayList<>();
+        List<Marque> countries = marqueService.getMarques();
         countries.forEach(country -> {
-            countryList.add(country.getName());
+            marqueList.add(country.getName());
         });
 
-        return countryList.stream().filter(t -> t.toLowerCase().startsWith(queryLowerCase)).collect(Collectors.toList());
+        return marqueList.stream().filter(t -> t.toLowerCase().startsWith(queryLowerCase)).collect(Collectors.toList());
     }
     public List<String> noResults(String query) {
         return Collections.EMPTY_LIST;
     }
 
-    public List<Country> completeCountry(String query) {
+    public List<Marque> completeCountry(String query) {
         String queryLowerCase = query.toLowerCase();
-        List<Country> countries = countryService.getCountries();
+        List<Marque> countries = marqueService.getMarques();
         return countries.stream().filter(t -> t.getName().toLowerCase().contains(queryLowerCase)).collect(Collectors.toList());
     }
 
@@ -62,46 +57,6 @@ public class AutoCompleteView {
 
     public void onEmptyMessageSelect() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Empty message selected"));
-    }
-
-    public String getTxt1() {
-        return txt1;
-    }
-
-    public void setTxt1(String txt1) {
-        this.txt1 = txt1;
-    }
-
-    public String getTxt2() {
-        return txt2;
-    }
-
-    public void setTxt2(String txt2) {
-        this.txt2 = txt2;
-    }
-
-    public String getTxt3() {
-        return txt3;
-    }
-
-    public void setTxt3(String txt3) {
-        this.txt3 = txt3;
-    }
-
-    public String getTxt4() {
-        return txt4;
-    }
-
-    public void setTxt4(String txt4) {
-        this.txt4 = txt4;
-    }
-
-    public String getTxt5() {
-        return txt5;
-    }
-
-    public void setTxt5(String txt5) {
-        this.txt5 = txt5;
     }
 
     public String getTxt6() {
@@ -136,59 +91,59 @@ public class AutoCompleteView {
         this.txt9 = txt9;
     }
 
-    public Country getCountry1() {
+    public Marque getCountry1() {
         return country1;
     }
 
-    public void setCountry1(Country country1) {
+    public void setCountry1(Marque country1) {
         this.country1 = country1;
     }
 
-    public Country getCountry2() {
+    public Marque getCountry2() {
         return country2;
     }
 
-    public void setCountry2(Country country2) {
+    public void setCountry2(Marque country2) {
         this.country2 = country2;
     }
 
-    public Country getCountry3() {
+    public Marque getCountry3() {
         return country3;
     }
 
-    public void setCountry3(Country country3) {
+    public void setCountry3(Marque country3) {
         this.country3 = country3;
     }
 
-    public Country getCountry4() {
+    public Marque getCountry4() {
         return country4;
     }
 
-    public void setCountry4(Country country4) {
+    public void setCountry4(Marque country4) {
         this.country4 = country4;
     }
 
-    public Country getCountry5() {
+    public Marque getCountry5() {
         return country5;
     }
 
-    public void setCountry5(Country country5) {
+    public void setCountry5(Marque country5) {
         this.country5 = country5;
     }
 
-    public List<Country> getSelectedCountries() {
+    public List<Marque> getSelectedCountries() {
         return selectedCountries;
     }
 
-    public void setSelectedCountries(List<Country> selectedCountries) {
+    public void setSelectedCountries(List<Marque> selectedCountries) {
         this.selectedCountries = selectedCountries;
     }
 
-    public void setCountryService(CountryService countryService) {
-        this.countryService = countryService;
+    public void setMarqueService(MarqueService marqueService) {
+        this.marqueService = marqueService;
     }
 
-    public char getCountryGroup(Country country) {
+    public char getCountryGroup(Marque country) {
         return country.getName().charAt(0);
     }
 }

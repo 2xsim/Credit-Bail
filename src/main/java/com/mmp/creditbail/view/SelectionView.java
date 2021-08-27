@@ -26,7 +26,7 @@ public class SelectionView implements Serializable {
 
     @PostConstruct
     public void init() {
-        products1 = service.getProducts(10);
+        products1 = service.getProducts();
     }
 
     public List<Demande> getProducts1() {

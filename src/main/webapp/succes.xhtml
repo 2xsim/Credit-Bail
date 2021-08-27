@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+        <title>Demande envoy</title>
+    </h:head>
+
+    <h:body styleClass="login-body p-d-flex p-jc-center p-ai-center">
+        <p:card styleClass="card" style="width: 45em">
+            <div class="p-grid">
+                <p:graphicImage name="images/succes/succes.svg" class="p-col-3" library="manhattan-layout"></p:graphicImage>
+                <div class="p-col-9">
+                    <h2 class="p-text-bold p-text-center">VOTRE DEMANDE A ÉTÉ EFFECTUÉE AVEC SUCCÈS</h2>
+                    <h4 class="p-text-center">Nous vous contacterons après analyse de votre dossier</h4>
+                </div>
+            </div>
+
+        </p:card>
+
+        <h:outputStylesheet name="css/primeicons.css" library="manhattan-layout"/>
+        <h:outputStylesheet name="css/primeflex.min.css" library="manhattan-layout"/>
+        <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="manhattan-layout" />
+    </h:body>
+
+</html>

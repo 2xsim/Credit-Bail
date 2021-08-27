@@ -23,8 +23,8 @@
                     <p:menuitem id="demandes_de_souscription" value="Demandes de souscription" outcome="demandes_souscription" icon="pi pi-fw"/>
                     <p:menuitem id="commandes" value="Commandes" outcome="commandes" icon="pi pi-fw"/>
                     <p:submenu id="clients_et_fornisseurs" label="Clients et Fournisseurs" icon="pi pi-fw">
-                        <p:menuitem id="clients" value="Clients" icon="pi pi-fw"/>
-                        <p:menuitem id="fournisseurs" value="Fournisseurs" icon="pi pi-fw"/>
+                        <p:menuitem id="clients" value="Clients" outcome="clients" icon="pi pi-fw"/>
+                        <p:menuitem id="fournisseurs" value="Fournisseurs" outcome="fournisseurs" icon="pi pi-fw"/>
                     </p:submenu>
                     <p:submenu id="materiels" label="Matériels" icon="pi pi-fw">
                         <p:menuitem id="nouveau_materiel" value="Nouveau matériel" outcome="nouveau_materiel" icon="pi pi-fw"/>
@@ -36,8 +36,9 @@
                         <p:menuitem id="liste_contrats" value="Liste des contrats" outcome="liste_contrats" icon="pi pi-fw"/>
                     </p:submenu>
                     <p:submenu id="factures" label="Factures" icon="pi pi-fw">
-                        <p:menuitem id="factures_clients" value="Clients" icon="pi pi-fw"/>
-                        <p:menuitem id="factures_fournisseurs" value="Fournisseurs" icon="pi pi-fw"/>
+                        <p:menuitem id="modeles_factures" value="Modèles" outcome="modeles_factures" icon="pi pi-fw"/>
+                        <p:menuitem id="factures_clients" value="Clients" outcome="factures_clients" icon="pi pi-fw"/>
+                        <p:menuitem id="factures_fournisseurs" value="Fournisseurs" outcome="factures_fournisseurs" icon="pi pi-fw"/>
                     </p:submenu>
                     <p:submenu id="agents" label="Agents" icon="pi pi-fw">
                         <p:menuitem id="nouvel_agent" value="Nouvel agent" outcome="nouvel_agent" icon="pi pi-fw"/>

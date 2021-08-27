@@ -37,8 +37,8 @@
 
                                 <div class="p-field p-col-12 p-md-4">
                                     <p:outputLabel value="Marque" for="@next"/>
-                                    <p:autoComplete id="marque" required="true" dropdown="true" value="#{autoCompleteView.txt6}"
-                                                    completeMethod="#{autoCompleteView.completeText}" scrollHeight="250"/>
+                                    <p:autoComplete id="marque" required="true" dropdown="true" value="#{autoCompleteMarqueView.txt6}"
+                                                    completeMethod="#{autoCompleteMarqueView.completeText}" scrollHeight="250"/>
                                 </div>
                                 <div class="p-field p-col-12 p-md-4">
                                     <p:outputLabel for="@next" value="Type de matériel"/>
@@ -46,14 +46,13 @@
                                                      hideNoSelectionOption="#{not empty selectOneMenuView.hideNoSelectOption}">
                                         <p:ajax update="@this" process="@this"/>
                                         <f:selectItem itemLabel="Veuillez choisir un type de matériel" itemValue="#{null}" noSelectionOption="true"/>
-                                        <f:selectItem itemLabel="1" itemValue="Option1"/>
-                                        <f:selectItem itemLabel="2" itemValue="Option2"/>
-                                        <f:selectItem itemLabel="3" itemValue="Option3"/>
-                                        <f:selectItem itemLabel="4" itemValue="Option4"/>
-                                        <f:selectItem itemLabel="5" itemValue="Option5"/>
-                                        <f:selectItem itemLabel="6" itemValue="Option6"/>
-                                        <f:selectItem itemLabel="7" itemValue="Option7"/>
-                                        <f:selectItem itemLabel="8" itemValue="Option8"/>
+                                        <f:selectItem itemLabel="Matériel de travaux publics" itemValue="1"/>
+                                        <f:selectItem itemLabel="Matériel de transport" itemValue="2"/>
+                                        <f:selectItem itemLabel="Matériel de manutention" itemValue="3"/>
+                                        <f:selectItem itemLabel="Matériel médical" itemValue="4"/>
+                                        <f:selectItem itemLabel="Matériel industriel" itemValue="5"/>
+                                        <f:selectItem itemLabel="Matériel de bureau" itemValue="6"/>
+                                        <f:selectItem itemLabel="Autre" itemValue="7"/>
                                     </p:selectOneMenu>
                                 </div>
                                 <div class="p-field p-col-12 p-md-4">
@@ -70,8 +69,8 @@
 
                                 <div class="p-field p-col-12 p-md-6">
                                     <p:outputLabel value="Fournisseur" for="@next"/>
-                                    <p:autoComplete id="fournisseur" required="true" value="#{autoCompleteView.txt1}"
-                                                    completeMethod="#{autoCompleteView.completeText}" scrollHeight="250"/>
+                                    <p:autoComplete id="fournisseur" required="true" value="#{autoCompleteFournisseurView.txt1}"
+                                                    completeMethod="#{autoCompleteFournisseurView.completeText}" scrollHeight="250"/>
                                 </div>
                                 <div class="p-field p-col-12 p-md-6">
                                     <p:outputLabel for="@next" value="Date d'acquisition"/>

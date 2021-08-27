@@ -11,43 +11,36 @@ public class Demande implements Serializable {
     private int id;
 
     private String code;
+    
+    private String date;
 
-    private String name;
+    private String nom;
 
-    private String description;
+    private String prenoms;
 
-    private String image;
+    private String designation;
 
-    private double price;
+    private String type_materiel;
 
-    private String category;
+    private String fournisseur;
 
-    private int quantity;
-
-    private InventoryStatus inventoryStatus;
-
-    private int rating;
+    private int prix;
 
     private List<Order> orders;
 
     public Demande() {
     }
 
-    public Demande(int id, String code, String name, String description, String image, double price, String category, int quantity, InventoryStatus inventoryStatus, int rating) {
+    public Demande(int id, String code, String date, String nom, String prenoms, String designation, String type_materiel, String fournisseur, int prix) {
         this.id = id;
         this.code = code;
-        this.name = name;
-        this.description = description;
-        this.image = image;
-        this.price = price;
-        this.category = category;
-        this.quantity = quantity;
-        this.inventoryStatus = inventoryStatus;
-        this.rating = rating;
-    }
-
-    public Demande clone() {
-        return new Demande(getId(), getCode(), getName(), getDescription(), getImage(), getPrice(), getCategory(), getQuantity(), getInventoryStatus(), getRating());
+        this.date = date;
+        this.nom = nom;
+        this.prenoms = prenoms;
+        this.designation = designation;
+        this.type_materiel = type_materiel;
+        this.fournisseur = fournisseur;
+        this.prix = prix;
     }
 
     public int getId() {
@@ -62,72 +55,64 @@ public class Demande implements Serializable {
         return code;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public void setCode(String code) {
         this.code = code;
     }
 
-    public String getName() {
-        return name;
+    public String getNom() {
+        return nom;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
-    public String getDescription() {
-        return description;
+    public String getPrenoms() {
+        return prenoms;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPrenoms(String prenoms) {
+        this.prenoms = prenoms;
     }
 
-    public String getImage() {
-        return image;
+    public String getDesignation() {
+        return designation;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setDesignation(String designation) {
+        this.designation = designation;
     }
 
-    public double getPrice() {
-        return price;
+    public String getType_materiel() {
+        return type_materiel;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setType_materiel(String type_materiel) {
+        this.type_materiel = type_materiel;
     }
 
-    public String getCategory() {
-        return category;
+    public String getFournisseur() {
+        return fournisseur;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setFournisseur(String fournisseur) {
+        this.fournisseur = fournisseur;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getPrix() {
+        return prix;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public InventoryStatus getInventoryStatus() {
-        return inventoryStatus;
-    }
-
-    public void setInventoryStatus(InventoryStatus inventoryStatus) {
-        this.inventoryStatus = inventoryStatus;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
+    public void setPrix(int prix) {
+        this.prix = prix;
     }
 
     public List<Order> getOrders() {

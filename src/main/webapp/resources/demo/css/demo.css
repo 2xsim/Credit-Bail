@@ -17,6 +17,18 @@
 .order-badge.order-returned {
     background: #ECCFFF;
     color: #694382; }
+.order-badge.order-deroulement {
+    background: #C8E6C9;
+    color: #256029; }
+.order-badge.order-resilie {
+    background: #FFCDD2;
+    color: #C63737; }
+.order-badge.order-attente {
+    background: #FEEDAF;
+    color: #8A5340; }
+.order-badge.order-litigieux {
+    background: #ECCFFF;
+    color: #694382; }
 
 .product-badge {
     border-radius: 2px;
@@ -40,6 +52,18 @@
 .product-badge.status-souscontrat {
     background: #FFCDD2;
     color: #C63737; }
+.product-badge.status-enligne {
+    background: #C8E6C9;
+    color: #256029; }
+.product-badge.status-horsligne {
+    background: #FFCDD2;
+    color: #C63737; }
+.product-badge.status-livree {
+    background: #C8E6C9;
+    color: #256029; }
+.product-badge.status-encours {
+    background: #FEEDAF;
+    color: #8A5340; }
 
 .customer-badge {
     border-radius: 2px;

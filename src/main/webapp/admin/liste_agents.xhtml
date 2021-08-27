@@ -5,16 +5,137 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template_admin.xhtml">
 
-    <ui:define name="title">Liste des matériels</ui:define>
+    <ui:define name="title">Liste des agents</ui:define>
 
     <ui:define name="content">
-        <div class="p-grid">
-            <div class="p-col">
-                <div class="card">
-                    <h4>Empty Page</h4>
-                    <p>This is your empty page template to start building beautiful applications.</p>
-                </div>
+        <h:form id="form">
+            <div class="card crud-demo">
+                <p:growl id="messages" showDetail="true"/>
+
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:commandButton id="delete-products-button" value="#{agentView.deleteButtonMessage}"
+                                         icon="pi pi-trash" actionListener="#{agentView.deleteSelectedProducts}"
+                                         styleClass="ui-button-danger" disabled="#{!agentView.hasSelectedProducts()}"
+                                         update="@this">
+                            <p:confirm header="Confirmation" message="Supprimer le(s) agent(s) sélectionné(s) ?"
+                                       icon="pi pi-exclamation-triangle"/>
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+                <p:dataTable id="dt-products" widgetVar="dtAgents" var="agent" value="#{agentView.agents}"
+                             reflow="true" styleClass="products-table"
+                             selection="#{agentView.selectedAgents}" rowKey="#{agent.id}" paginator="true"
+                             rows="10" rowSelectMode="add" paginatorPosition="bottom">
+                    <f:facet name="header">
+                        <div class="products-table-header">
+                            <span style="font-weight: bold">AGENTS</span>
+
+                            <span class="filter-container ui-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <p:inputText id="globalFilter" onkeyup="PF('dtAgents').filter()" placeholder="Recherche"/>
+                            </span>
+                        </div>
+                    </f:facet>
+
+                    <p:ajax event="rowSelect" update=":form:delete-products-button"/>
+                    <p:ajax event="rowUnselect" update=":form:delete-products-button"/>
+                    <p:ajax event="rowSelectCheckbox" update=":form:delete-products-button"/>
+                    <p:ajax event="rowUnselectCheckbox" update=":form:delete-products-button"/>
+                    <p:ajax event="toggleSelect" update=":form:delete-products-button"/>
+
+                    <p:column selectionMode="multiple" exportable="false"></p:column>
+
+                    <p:column headerText="Code" sortBy="#{agent.code}" filterBy="#{agent.code}">
+                        <h:outputText value="#{agent.code}"/>
+                    </p:column>
+                    <p:column headerText="Nom" sortBy="#{agent.nom}" filterBy="#{agent.nom}">
+                        <h:outputText value="#{agent.nom}"/>
+                    </p:column>
+                    <p:column headerText="Prénom(s)" sortBy="#{agent.prenoms}" filterBy="#{agent.prenoms}">
+                        <h:outputText value="#{agent.prenoms}"/>
+                    </p:column>
+                    <p:column headerText="Date de naissance" sortBy="#{agent.dateNaissance}" filterBy="#{agent.dateNaissance}">
+                        <h:outputText value="#{agent.dateNaissance}"/>
+                    </p:column>
+                    <p:column headerText="Contact" sortBy="#{agent.contact}" filterBy="#{agent.contact}">
+                        <h:outputText value="#{agent.contact}"/>
+                    </p:column>
+                    <p:column headerText="Adresse" sortBy="#{agent.adresse}" filterBy="#{agent.adresse}">
+                        <h:outputText value="#{agent.adresse}"/>
+                    </p:column>
+                    <p:column headerText="Fonction" sortBy="#{agent.fonction}" filterBy="#{agent.fonction}">
+                        <h:outputText value="#{agent.fonction}"/>
+                    </p:column>
+                    <p:column exportable="false">
+                        <p:commandButton icon="pi pi-pencil" update=":form:manage-product-content"
+                                         oncomplete="PF('manageProductDialog').show()"
+                                         styleClass="edit-button rounded-button ui-button-success" process="@this">
+                            <f:setPropertyActionListener value="#{agent}" target="#{agentView.selectedAgent}"/>
+                            <p:resetInput target=":form:manage-product-content"/>
+                        </p:commandButton>
+                        <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+                                         oncomplete="PF('deleteProductDialog').show()">
+                            <f:setPropertyActionListener value="#{agent}" target="#{agentView.selectedAgent}"/>
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:dialog header="Informations sur l'agent" showEffect="fade" modal="true"
+                          widgetVar="manageProductDialog" responsive="true">
+                    <p:outputPanel id="manage-product-content" class="ui-fluid" style="width: 35em">
+                        <p:outputPanel rendered="#{not empty agentView.selectedAgent}">
+                            <div class="p-formgrid p-grid">
+                                <div class="p-field p-col-12 p-md-6">
+                                    <p:outputLabel for="nom">Nom</p:outputLabel>
+                                    <p:inputText id="nom" value="#{agentView.selectedAgent.nom}" type="text" required="true" />
+                                </div>
+                                <div class="p-field p-col-12 p-md-6">
+                                    <p:outputLabel value="Prénoms" for="@next"/>
+                                    <p:inputText id="prenoms" value="#{agentView.selectedAgent.prenoms}" type="text" required="true" />
+                                </div>
+                                <div class="p-field p-col-12 p-md-6">
+                                    <p:outputLabel for="date_de_naissance" value="Date de naissance"/>
+                                    <p:datePicker id="date_de_naissance" value="#{agentView.selectedAgent.dateNaissance}" mindate="#{calendarView.minDate}"
+                                                  maxdate="#{calendarView.maxDate}" monthNavigator="true" yearNavigator="true"
+                                                  pattern="dd/MM/yyyy" readonlyInput="true" required="true"/>
+                                </div>
+                                <div class="p-field p-col-12 p-md-6">
+                                    <p:outputLabel value="Contact" for="@next"/>
+                                    <p:inputText id="contact" value="#{agentView.selectedAgent.contact}" type="text" required="true" />
+                                </div>
+                                <div class="p-field p-col-12">
+                                    <p:outputLabel value="Adresse" for="@next"/>
+                                    <p:inputText id="adresse" value="#{agentView.selectedAgent.adresse}" type="text" required="true" />
+                                </div>
+                            </div>
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Enregistrer" icon="pi pi-check" actionListener="#{agentView.saveProduct}"
+                                         update="manage-product-content" process="manage-product-content @this"/>
+                        <p:commandButton value="Annuler" icon="pi pi-times" onclick="PF('manageProductDialog').hide()"
+                                         class="ui-button-secondary"/>
+                    </f:facet>
+                </p:dialog>
+
+                <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
+                                 message="Supprimer l'agent ?" header="Confirmation" severity="warn">
+                    <p:commandButton value="Oui" icon="pi pi-check" actionListener="#{agentView.deleteProduct}"
+                                     process="@this" oncomplete="PF('deleteProductDialog').hide()"/>
+                    <p:commandButton value="Non" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                     onclick="PF('deleteProductDialog').hide()"/>
+                </p:confirmDialog>
+
+                <p:confirmDialog global="true" showEffect="fade" width="350">
+                    <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                    <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
+                                     icon="pi pi-times"/>
+                </p:confirmDialog>
             </div>
-        </div>
+        </h:form>
     </ui:define>
 </ui:composition>

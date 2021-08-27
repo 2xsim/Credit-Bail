@@ -18,33 +18,33 @@
                         </div>
                     </f:facet>
                     
-                    <p:column headerText="Date" filterBy="#{demande.quantity}">
-                        <h:outputText value="#{demande.quantity}" />
+                    <p:column headerText="Date" filterBy="#{demande.date}">
+                        <h:outputText value="#{demande.date}" />
                     </p:column>
                     
-                    <p:column headerText="Nom" filterBy="#{demande.name}">
-                        <h:outputText value="#{demande.name}" />
+                    <p:column headerText="Nom" filterBy="#{demande.nom}">
+                        <h:outputText value="#{demande.nom}" />
                     </p:column>
                     
-                    <p:column headerText="Prénom(s)" filterBy="#{demande.name}">
-                        <h:outputText value="#{demande.name}" />
+                    <p:column headerText="Prénom(s)" filterBy="#{demande.prenoms}">
+                        <h:outputText value="#{demande.prenoms}" />
                     </p:column>
 
-                    <p:column headerText="Désignation" filterBy="#{demande.category}">
-                        <h:outputText value="#{demande.category}" />
+                    <p:column headerText="Désignation" filterBy="#{demande.designation}">
+                        <h:outputText value="#{demande.designation}" />
                     </p:column>
                     
-                    <p:column headerText="Type de matériel" filterBy="#{demande.category}">
-                        <h:outputText value="#{demande.category}" />
+                    <p:column headerText="Type de matériel" filterBy="#{demande.type_materiel}">
+                        <h:outputText value="#{demande.type_materiel}" />
                     </p:column>
 
-                    <p:column headerText="Fournisseur" filterBy="#{demande.quantity}">
-                        <h:outputText value="#{demande.quantity}" />
+                    <p:column headerText="Fournisseur" filterBy="#{demande.fournisseur}">
+                        <h:outputText value="#{demande.fournisseur}" />
                     </p:column>
                     
-                    <p:column headerText="Prix d'achat" filterBy="#{demande.price}" sortBy="#{demande.price}">
-                        <h:outputText value="#{demande.price}" class="p-text-bold">
-                            <f:convertNumber integerOnly="true" pattern="### ### FCFA" type="currency"/>
+                    <p:column headerText="Prix d'achat" filterBy="#{demande.prix}" sortBy="#{demande.prix}">
+                        <h:outputText value="#{demande.prix}" class="p-text-bold">
+                            <f:convertNumber integerOnly="true" pattern="###,### FCFA" type="currency"/>
                         </h:outputText>
                     </p:column>
 

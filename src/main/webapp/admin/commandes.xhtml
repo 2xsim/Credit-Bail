@@ -8,14 +8,137 @@
     <ui:define name="title">Gestion des commandes</ui:define>
 
     <ui:define name="content">
-        <div class="p-grid">
-            <div class="p-col">
-                <div class="card">
-                    <h4>Empty Page</h4>
-                    <p>This is your empty page template to start building beautiful applications.</p>
+        <h:form id="form">
+            <div class="p-grid crud-demo">
+                <div class="p-col-12">
+                    <div class="card">
+                        <p:growl id="messages" showDetail="true" />
+
+                        <p:toolbar styleClass="p-mb-4">
+                            <p:toolbarGroup>
+                                <p:commandButton value="Nouveau" icon="pi pi-plus" actionListener="#{commandeView.openNew}" update="manage-product-content" oncomplete="PF('manageProductDialog').show()" 
+                                                 styleClass="ui-button-success" style="margin-right: .5rem" />
+                                <p:commandButton id="delete-products-button" value="#{commandeView.deleteButtonMessage}" icon="pi pi-trash" actionListener="#{commandeView.deleteSelectedProducts}" 
+                                                 styleClass="ui-button-danger" disabled="#{!commandeView.hasSelectedProducts()}" update="@this">
+                                    <p:confirm header="Confirmation" message="Supprimer la(les) commande(s) sélectionnée(s) ?" icon="pi pi-exclamation-triangle" />
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                            <p:toolbarGroup>
+                                <p:commandButton value="Exporter" icon="pi pi-upload" styleClass="ui-button-help" ajax="false">
+                                    <p:dataExporter type="pdf" target="dt-products" fileName="products"/>
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+
+                        <p:dataTable id="dt-products" widgetVar="dtProducts" var="commande" value="#{commandeView.commandes}" reflow="true" styleClass="products-table"
+                                     selection="#{commandeView.selectedCommandes}" rowKey="#{commande.id}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom">
+                            <f:facet name="header">
+                                <div class="products-table-header">
+                                    <span style="font-weight: bold">COMMANDES</span>
+
+                                    <span class="filter-container ui-input-icon-left">
+                                        <i class="pi pi-search"></i>
+                                        <p:inputText id="globalFilter" onkeyup="PF('dtProducts').filter()" placeholder="Recherche" />
+                                    </span>
+                                </div>
+                            </f:facet>
+
+                            <p:ajax event="rowSelect" update=":form:delete-products-button" />
+                            <p:ajax event="rowUnselect" update=":form:delete-products-button" />
+                            <p:ajax event="rowSelectCheckbox" update=":form:delete-products-button" />
+                            <p:ajax event="rowUnselectCheckbox" update=":form:delete-products-button" />
+                            <p:ajax event="toggleSelect" update=":form:delete-products-button" />
+
+                            <p:column selectionMode="multiple" exportable="false"></p:column>
+                            <p:column headerText="Code" sortBy="#{commande.code}" filterBy="#{commande.code}">
+                                <h:outputText value="#{commande.code}" />
+                            </p:column>
+                            <p:column headerText="Date" sortBy="#{commande.date}" filterBy="#{commande.date}">
+                                <h:outputText value="#{commande.date}" />
+                            </p:column>
+                            <p:column headerText="Nom du fournisseur" sortBy="#{commande.fournisseur}" filterBy="#{commande.fournisseur}">
+                                <h:outputText value="#{commande.fournisseur}" />
+                            </p:column>
+                            <p:column headerText="Libellé matériel" sortBy="#{commande.materiel}" filterBy="#{commande.materiel}">
+                                <h:outputText value="#{commande.materiel}" />
+                            </p:column>
+                            <p:column headerText="Nom du client" sortBy="#{commande.nomClient}" filterBy="#{commande.nomClient}">
+                                <h:outputText value="#{commande.nomClient}" />
+                            </p:column>
+                            <p:column headerText="Prénom(s) du client" sortBy="#{commande.prenomsClient}" filterBy="#{commande.prenomsClient}">
+                                <h:outputText value="#{commande.prenomsClient}" />
+                            </p:column>
+                            <p:column headerText="Quantité" sortBy="#{commande.quantity}" filterBy="#{commande.quantity}">
+                                <h:outputText value="#{commande.quantity}" />
+                            </p:column>
+                            <p:column headerText="Statut" sortBy="#{commande.statutCommande}" filterBy="#{commande.statutCommande}">
+                                <h:outputText styleClass="product-badge status-#{commande.statutCommande.name().toLowerCase()}" value="#{commande.statutCommande.text}" />
+                            </p:column>
+                            <p:column exportable="false">
+                                <p:commandButton icon="pi pi-pencil" update=":form:manage-product-content" oncomplete="PF('manageProductDialog').show()" 
+                                                 styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                    <f:setPropertyActionListener value="#{commande}" target="#{commandeView.selectedCommande}" />
+                                </p:commandButton>
+                                <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this" oncomplete="PF('deleteProductDialog').show()" >
+                                    <f:setPropertyActionListener value="#{commande}" target="#{commandeView.selectedCommande}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+
+                        <p:dialog header="Informations sur la commande" showEffect="fade" modal="true" widgetVar="manageProductDialog" responsive="true">
+                            <p:outputPanel id="manage-product-content" class="ui-fluid">
+                                <p:outputPanel rendered="#{not empty commandeView.selectedCommande}">
+                                    <div class="p-formgrid p-grid">
+                                        <div class="p-field p-col">
+                                            <p:outputLabel for="nom">Nom</p:outputLabel>
+                                            <p:inputText id="nom" value="#{commandeView.selectedCommande.fournisseur}" required="true" />
+                                        </div>
+                                        <div class="p-field p-col">
+                                            <p:outputLabel for="prenoms">Prénom(s)</p:outputLabel>
+                                            <p:inputText id="prenoms" value="#{commandeView.selectedCommande.materiel}" required="true" />
+                                        </div>
+                                    </div>
+
+                                    <div class="p-formgrid p-grid">
+                                        <div class="p-field p-col">
+                                            <p:outputLabel for="sexe" value="Sexe"/>
+                                            <p:selectOneRadio id="sexe" required="true">
+                                                <f:selectItem itemLabel="Homme" itemValue="Option1"/>
+                                                <f:selectItem itemLabel="Femme" itemValue="Option2"/>
+                                                <f:selectItem itemLabel="Autre" itemValue="Option3"/>
+                                            </p:selectOneRadio>
+                                        </div>
+                                        <div class="p-field p-col">
+                                            <p:outputLabel for="numero_de_telephone" value="Numero de téléphone"/>
+                                            <p:inputMask id="numero_de_telephone" required="true" value="" mask="99 99 999 999"/>
+                                        </div>
+                                    </div>
+                                    <div class="p-field">
+                                        <p:outputLabel for="adresse">Adresse</p:outputLabel>
+                                        <p:inputText id="adresse" value="#{commandeView.selectedCommande.materiel}" required="true" />
+                                    </div>
+                                </p:outputPanel>
+                            </p:outputPanel>
+
+                            <f:facet name="footer">
+                                <p:commandButton value="Enregistrer" icon="pi pi-check" actionListener="#{commandeView.saveCommande}" update="manage-product-content" process="manage-product-content @this" />
+                                <p:commandButton value="Annuler" icon="pi pi-times" onclick="PF('manageProductDialog').hide()" class="ui-button-secondary" />
+                            </f:facet>
+                        </p:dialog> 
+
+                        <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300" message="Supprimer la commande ?" header="Confirmation" severity="warn">
+                            <p:commandButton value="Oui" icon="pi pi-check" actionListener="#{commandeView.deleteCommande}" process="@this" oncomplete="PF('deleteProductDialog').hide()"/>
+                            <p:commandButton value="Non" type="button" styleClass="ui-button-secondary" icon="pi pi-times" onclick="PF('deleteProductDialog').hide()" />
+                        </p:confirmDialog>
+
+                        <p:confirmDialog global="true" showEffect="fade" width="300">
+                            <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                            <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no ui-button-secondary" icon="pi pi-times" />
+                        </p:confirmDialog>
+                    </div>
                 </div>
             </div>
-        </div>
+        </h:form>
     </ui:define>
     
 </ui:composition>

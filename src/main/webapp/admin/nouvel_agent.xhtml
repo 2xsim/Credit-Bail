@@ -5,7 +5,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template_admin.xhtml">
 
-    <ui:define name="title">Gestion des agents</ui:define>
+    <ui:define name="title">Nouvel agent</ui:define>
 
     <ui:define name="content">
         <div class="p-grid">
@@ -88,13 +88,6 @@
                             </div>
                         </p:fieldset>
 
-                        <p:fieldset class="p-mt-3" legend="Matériel">
-                            <div class="card ui-fluid">
-                                <div class="p-formgrid p-grid">
-                                </div>
-                            </div>
-                        </p:fieldset>
-
                         <p:fieldset class="p-mt-3" legend="Pièces jointes">
                             <div class="card ui-fluid">
                                 <div class="p-formgrid p-grid">
@@ -103,7 +96,7 @@
                                         <p:fileUpload class="p-ml-2" required="true" mode="simple" skinSimple="true"/>
                                     </div>
                                     <div class="p-field p-col-12 p-md-6">
-                                        <p:outputLabel value="Bulletin de salaire" for="@next"/>
+                                        <p:outputLabel value="CV" for="@next"/>
                                         <p:fileUpload class="p-ml-2" required="true" mode="simple" skinSimple="true"/>
                                     </div>
                                 </div>

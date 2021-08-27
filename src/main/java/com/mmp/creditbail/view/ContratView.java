@@ -1,7 +1,7 @@
 package com.mmp.creditbail.view;
 
-import com.mmp.creditbail.beans.Materiel;
-import com.mmp.creditbail.service.MaterielService;
+import com.mmp.creditbail.beans.Contrat;
+import com.mmp.creditbail.service.ContratService;
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
@@ -15,50 +15,50 @@ import org.primefaces.PrimeFaces;
 
 @Named
 @ViewScoped
-public class CrudView implements Serializable {
+public class ContratView implements Serializable {
 
-    private List<Materiel> products;
+    private List<Contrat> products;
 
-    private Materiel selectedMateriel;
+    private Contrat selectedContrat;
 
-    private List<Materiel> selectedMateriels;
+    private List<Contrat> selectedContrats;
 
     @Inject
-    private MaterielService materielService;
+    private ContratService contratService;
 
     @PostConstruct
     public void init() {
-        this.products = this.materielService.getClonedProducts(100);
+        this.products = this.contratService.getContrats();
     }
 
-    public List<Materiel> getProducts() {
+    public List<Contrat> getProducts() {
         return products;
     }
 
-    public Materiel getSelectedMateriel() {
-        return selectedMateriel;
+    public Contrat getSelectedContrat() {
+        return selectedContrat;
     }
 
-    public void setSelectedMateriel(Materiel selectedMateriel) {
-        this.selectedMateriel = selectedMateriel;
+    public void setSelectedContrat(Contrat selectedContrat) {
+        this.selectedContrat = selectedContrat;
     }
 
-    public List<Materiel> getSelectedMateriels() {
-        return selectedMateriels;
+    public List<Contrat> getSelectedContrats() {
+        return selectedContrats;
     }
 
-    public void setSelectedMateriels(List<Materiel> selectedMateriels) {
-        this.selectedMateriels = selectedMateriels;
+    public void setSelectedContrats(List<Contrat> selectedContrats) {
+        this.selectedContrats = selectedContrats;
     }
 
     public void openNew() {
-        this.selectedMateriel = new Materiel();
+        this.selectedContrat = new Contrat();
     }
 
     public void saveProduct() {
-        if (this.selectedMateriel.getCode() == null) {
-            this.selectedMateriel.setCode(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9));
-            this.products.add(this.selectedMateriel);
+        if (this.selectedContrat.getProductCode()== null) {
+            this.selectedContrat.setProductCode(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9));
+            this.products.add(this.selectedContrat);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Product Added"));
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Product Updated"));
@@ -69,15 +69,15 @@ public class CrudView implements Serializable {
     }
 
     public void deleteProduct() {
-        this.products.remove(this.selectedMateriel);
-        this.selectedMateriel = null;
+        this.products.remove(this.selectedContrat);
+        this.selectedContrat = null;
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Product Removed"));
         PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
     }
 
     public String getDeleteButtonMessage() {
         if (hasSelectedProducts()) {
-            int size = this.selectedMateriels.size();
+            int size = this.selectedContrats.size();
             return size > 1 ? size + " matériels sélectionnés" : "1 matériel sélectionné";
         }
 
@@ -85,15 +85,15 @@ public class CrudView implements Serializable {
     }
 
     public boolean hasSelectedProducts() {
-        return this.selectedMateriels != null && !this.selectedMateriels.isEmpty();
+        return this.selectedContrats != null && !this.selectedContrats.isEmpty();
     }
 
     public void deleteSelectedProducts() {
-        this.products.removeAll(this.selectedMateriels);
-        this.selectedMateriels = null;
+        this.products.removeAll(this.selectedContrats);
+        this.selectedContrats = null;
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Products Removed"));
         PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
-        PrimeFaces.current().executeScript("PF('dtMateriels').clearFilters()");
+        PrimeFaces.current().executeScript("PF('dtContrats').clearFilters()");
     }
 
 }

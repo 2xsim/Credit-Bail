@@ -1,8 +1,6 @@
 package com.mmp.creditbail.beans;
 
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.criteria.Order;
 
 public class Materiel implements Serializable {
 
@@ -14,7 +12,7 @@ public class Materiel implements Serializable {
 
     private String libelle;
 
-    private String description;
+    private String marque;
 
     private String fournisseur;
 
@@ -22,32 +20,23 @@ public class Materiel implements Serializable {
 
     private String type_materiel;
 
-    private int quantity;
-
-    private StatutInventaire statut;
-
     private int etat;
-
-    private List<Order> orders;
+    
+    private StatutInventaire statut;
 
     public Materiel() {
     }
 
-    public Materiel(int id, String code, String name, String description, String image, double price, String category, int quantity, StatutInventaire inventoryStatus, int rating) {
+    public Materiel(int id, String code, String libelle, String marque, String fournisseur, double prix, String type_materiel, int etat, StatutInventaire statut) {
         this.id = id;
         this.code = code;
-        this.libelle = name;
-        this.description = description;
-        this.fournisseur = image;
-        this.prix = price;
-        this.type_materiel = category;
-        this.quantity = quantity;
-        this.statut = inventoryStatus;
-        this.etat = rating;
-    }
-
-    public Materiel clone() {
-        return new Materiel(getId(), getCode(), getLibelle(), getDescription(), getFournisseur(), getPrix(), getType_materiel(), getQuantity(), getStatut(), getEtat());
+        this.libelle = libelle;
+        this.marque = marque;
+        this.fournisseur = fournisseur;
+        this.prix = prix;
+        this.type_materiel = type_materiel;
+        this.etat = etat;
+        this.statut = statut;
     }
 
     public int getId() {
@@ -74,12 +63,12 @@ public class Materiel implements Serializable {
         this.libelle = libelle;
     }
 
-    public String getDescription() {
-        return description;
+    public String getMarque() {
+        return marque;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setMarque(String marque) {
+        this.marque = marque;
     }
 
     public String getFournisseur() {
@@ -106,14 +95,6 @@ public class Materiel implements Serializable {
         this.type_materiel = type_materiel;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
     public StatutInventaire getStatut() {
         return statut;
     }
@@ -128,14 +109,6 @@ public class Materiel implements Serializable {
 
     public void setEtat(int etat) {
         this.etat = etat;
-    }
-
-    public List<Order> getOrders() {
-        return this.orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
     }
 
     @Override

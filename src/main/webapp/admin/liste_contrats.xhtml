@@ -8,13 +8,164 @@
     <ui:define name="title">Liste des contrats</ui:define>
 
     <ui:define name="content">
-        <div class="p-grid">
-            <div class="p-col">
-                <div class="card">
-                    <h4>Empty Page</h4>
-                    <p>This is your empty page template to start building beautiful applications.</p>
-                </div>
+        <h:form id="form">
+            <div class="card crud-demo">
+                <p:growl id="messages" showDetail="true"/>
+
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:commandButton id="delete-products-button" value="#{contratView.deleteButtonMessage}"
+                                         icon="pi pi-trash" actionListener="#{contratView.deleteSelectedProducts}"
+                                         styleClass="ui-button-danger" disabled="#{!contratView.hasSelectedProducts()}"
+                                         update="@this">
+                            <p:confirm header="Confirmation" message="Supprimer le(s) matériels(s) sélectionné(s) ?"
+                                       icon="pi pi-exclamation-triangle"/>
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+                <p:dataTable id="dt-products" widgetVar="dtContrats" var="contrat" value="#{contratView.products}"
+                             reflow="true" styleClass="products-table"
+                             selection="#{contratView.selectedContrats}" rowKey="#{contrat.id}" paginator="true"
+                             rows="10" rowSelectMode="add" paginatorPosition="bottom">
+                    <f:facet name="header">
+                        <div class="products-table-header">
+                            <span style="font-weight: bold">CONTRATS</span>
+
+                            <span class="filter-container ui-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <p:inputText id="globalFilter" onkeyup="PF('dtContrats').filter()" placeholder="Recherche"/>
+                            </span>
+                        </div>
+                    </f:facet>
+
+                    <p:ajax event="rowSelect" update=":form:delete-products-button"/>
+                    <p:ajax event="rowUnselect" update=":form:delete-products-button"/>
+                    <p:ajax event="rowSelectCheckbox" update=":form:delete-products-button"/>
+                    <p:ajax event="rowUnselectCheckbox" update=":form:delete-products-button"/>
+                    <p:ajax event="toggleSelect" update=":form:delete-products-button"/>
+
+                    <p:column selectionMode="multiple" exportable="false"></p:column>
+
+                    <p:column headerText="Code" sortBy="#{contrat.productCode}" filterBy="#{contrat.productCode}">
+                        <h:outputText value="#{contrat.productCode}"/>
+                    </p:column>
+                    <p:column headerText="Date" sortBy="#{contrat.date}" filterBy="#{contrat.date}">
+                        <h:outputText value="#{contrat.date}"/>
+                    </p:column>
+                    <p:column headerText="Client" sortBy="#{contrat.client}" filterBy="#{contrat.client}">
+                        <h:outputText value="#{contrat.client}"/>
+                    </p:column>
+                    <p:column headerText="Matériel" sortBy="#{contrat.materiel}" filterBy="#{contrat.materiel}">
+                        <h:outputText value="#{contrat.materiel}"/>
+                    </p:column>
+                    <p:column headerText="Fournisseur" sortBy="#{contrat.fournisseur}" filterBy="#{contrat.fournisseur}">
+                        <h:outputText value="#{contrat.fournisseur}"/>
+                    </p:column>
+                    <p:column headerText="Loyer" sortBy="#{contrat.loyer}">
+                        <h:outputText value="#{contrat.loyer}" style="font-weight: 700">
+                            <f:convertNumber integerOnly="true" pattern="###,### FCFA" type="currency"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Statut" sortBy="#{contrat.statut}"
+                              filterBy="#{contrat.statut}">
+                        <h:outputText styleClass="order-badge order-#{contrat.statut.name().toLowerCase()}"
+                                      value="#{contrat.statut}"/>
+                    </p:column>
+                    <p:column exportable="false">
+                        <p:commandButton icon="pi pi-pencil" update=":form:manage-product-content"
+                                         oncomplete="PF('manageProductDialog').show()"
+                                         styleClass="edit-button rounded-button ui-button-success" process="@this">
+                            <f:setPropertyActionListener value="#{contrat}" target="#{contratView.selectedContrat}"/>
+                            <p:resetInput target=":form:manage-product-content"/>
+                        </p:commandButton>
+                        <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+                                         oncomplete="PF('deleteProductDialog').show()">
+                            <f:setPropertyActionListener value="#{contrat}" target="#{contratView.selectedContrat}"/>
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:dialog header="Informations sur le matériel" showEffect="fade" modal="true"
+                          widgetVar="manageProductDialog" responsive="true">
+                    <p:outputPanel id="manage-product-content" class="ui-fluid">
+                        <p:outputPanel rendered="#{not empty contratView.selectedContrat}">
+
+                            <p:fieldset legend="Matériel">
+                                <div class="p-formgrid p-grid">
+                                    <div class="p-field p-col-12 p-md-6">
+                                        <p:outputLabel for="libelle">Libellé</p:outputLabel>
+                                        <p:inputText id="libelle" value="#{contratView.selectedContrat.client}" type="text" required="true" />
+                                    </div>
+
+                                    <div class="p-field p-col-12 p-md-4">
+                                        <p:outputLabel value="Marque" for="@next"/>
+                                        <p:inputText id="marque" value="#{contratView.selectedContrat.client}" type="text" required="true" />
+                                    </div>
+                                    <div class="p-field p-col-12 p-md-4">
+                                        <p:outputLabel for="@next" value="Type de matériel"/>
+                                        <p:inputText id="type_contrat" value="#{contratView.selectedContrat.client}" type="text" required="true" />
+                                    </div>
+                                    <div class="p-field p-col-12 p-md-4">
+                                        <p:outputLabel for="@next">État du matériel</p:outputLabel>
+                                        <p:rating value="${contratView.selectedContrat.client}"/>
+                                    </div>
+
+                                    <div class="p-field p-col-12 p-md-6">
+                                        <p:outputLabel value="Fournisseur" for="@next"/>
+                                        <p:inputText id="fournisseur" value="#{contratView.selectedContrat.client}" type="text" required="true" />
+                                    </div>
+
+                                    <div class="p-field p-col-12 p-md-6">
+                                        <p:outputLabel value="Statut" for="@next"/>
+                                        <p:selectOneMenu id="statut"  value="#{contratView.selectedContrat.statut}">
+                                            <f:selectItem itemLabel="HORS CONTRAT" itemValue="HORS CONTRAT"/>
+                                            <f:selectItem itemLabel="SOUS CONTRAT" itemValue="SOUS CONTRAT"/>
+                                        </p:selectOneMenu>
+                                    </div>
+                                </div>
+                            </p:fieldset>
+
+                            <p:fieldset legend="Coût" class="p-mt-3">
+                                <div class="p-formgrid p-grid">
+                                    <div class="p-field p-col-12 p-md-6">
+                                        <p:outputLabel for="prix_achat" value="Prix d'achat"/>
+                                        <p:inputNumber id="prix_achat" required="true" value="" minValue="0" symbol=" FCFA"
+                                                       symbolPosition="s" decimalPlaces="0"/>
+                                    </div>
+                                    <div class="p-field p-col-12 p-md-6">
+                                        <p:outputLabel for="prix_vente" value="Prix de vente"/>
+                                        <p:inputNumber id="prix_vente" required="true" value="" minValue="0" symbol=" FCFA"
+                                                       symbolPosition="s" decimalPlaces="0"/>
+                                    </div>
+                                </div>
+                            </p:fieldset>
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Enregistrer" icon="pi pi-check" actionListener="#{contratView.saveProduct}"
+                                         update="manage-product-content" process="manage-product-content @this"/>
+                        <p:commandButton value="Annuler" icon="pi pi-times" onclick="PF('manageProductDialog').hide()"
+                                         class="ui-button-secondary"/>
+                    </f:facet>
+                </p:dialog>
+
+                <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
+                                 message="Supprimer le matériel ?" header="Confirmation" severity="warn">
+                    <p:commandButton value="Oui" icon="pi pi-check" actionListener="#{contratView.deleteProduct}"
+                                     process="@this" oncomplete="PF('deleteProductDialog').hide()"/>
+                    <p:commandButton value="Non" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                     onclick="PF('deleteProductDialog').hide()"/>
+                </p:confirmDialog>
+
+                <p:confirmDialog global="true" showEffect="fade" width="350">
+                    <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                    <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
+                                     icon="pi pi-times"/>
+                </p:confirmDialog>
             </div>
-        </div>
+        </h:form>
     </ui:define>
 </ui:composition>
