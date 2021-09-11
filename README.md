@@ -17,7 +17,7 @@ Ce qu'il est requis pour commencer avec votre projet...
 
 ### Installation
 
-Executez la commande `mvn install:install-file -Dfile=PATH/TO/MANHATTAN.jar -DgroupId=org.primefaces -DartifactId=manhattan -Dversion=4.0.0 -Dpackaging=jar`
+Executez la commande `mvn install:install-file -Dfile=PATH/TO/manhattan-theme-4.0.0.jar -DgroupId=org.primefaces -DartifactId=manhattan -Dversion=4.0.0 -Dpackaging=jar`
 
 Ensuite vous pouvez montrer ce que vous obtenez au final...
 
